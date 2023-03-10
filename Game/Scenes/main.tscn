@@ -67,7 +67,6 @@ autostart = true
 curve = SubResource("Curve2D_tk6ww")
 
 [node name="PetFollow" type="PathFollow2D" parent="Pet/PetPath"]
-progress = 2240.0
 rotates = false
 
 [node name="PetSprite" type="Sprite2D" parent="Pet/PetPath/PetFollow"]
