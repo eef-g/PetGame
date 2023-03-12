@@ -9,10 +9,10 @@ public partial class ClickyButton : Button
 	[Export]
 	private Node2D _targetScene = null; 
 	// Called when the node enters the scene tree for the first time.
+	Node2D root_node;
 	public override void _Ready()
 	{
 		this.Text = _txt;
-		this.Pressed += Button_Pressed; 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,12 +21,12 @@ public partial class ClickyButton : Button
 
 	}
 
-	private void Button_Pressed()
+	private void FarmButtonPressed()
 	{
-		if(_targetScene != null)
-		{
-			GD.Print("We have a node attached to the button!");
-		}
-		GD.Print("Hello world!");
+		GD.Print("The farm button was pressed.");
+		var scene = GD.Load<PackedScene>("res://Scenes/food.tscn");
+		var inst = scene.Instantiate<Node2D>();
+		inst.Position = new Vector2(872, 380);
+		GetParent().AddChild(inst);
 	}
 }
