@@ -22,6 +22,7 @@ public partial class Pet : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		timer.WaitTime = (rand.NextDouble() * (5.0f - 1.0f) + 1.0f);
 		pet = pl.CreatePet(pet_type);
 		GD.Print(pet.type);
 	}
