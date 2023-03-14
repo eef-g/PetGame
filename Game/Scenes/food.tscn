@@ -1,33 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://do3kavs2ua41w"]
+[gd_scene load_steps=6 format=3 uid="uid://do3kavs2ua41w"]
 
 [ext_resource type="Texture2D" uid="uid://bhxnghdbxsyd7" path="res://Assets/icon.svg" id="1_fohro"]
+[ext_resource type="Script" path="res://Scripts/FoodDrop.cs" id="1_pspu2"]
 [ext_resource type="Script" path="res://Scripts/FoodArea.cs" id="2_wfty8"]
+
+[sub_resource type="Curve2D" id="Curve2D_24vxq"]
+bake_interval = 31.35
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 395)
+}
+point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qbds3"]
 size = Vector2(128, 128)
 
-[sub_resource type="Curve2D" id="Curve2D_24vxq"]
-
 [node name="Food" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-0.249998, -0.499996)
-scale = Vector2(0.386719, 0.367188)
-texture = ExtResource("1_fohro")
-
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-0.249998, -0.499935)
-scale = Vector2(0.386719, 0.367188)
-script = ExtResource("2_wfty8")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -0.00012207)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_qbds3")
-
 [node name="Path2D" type="Path2D" parent="."]
+position = Vector2(-1.49012e-08, -2.98023e-08)
+scale = Vector2(1, 1)
 curve = SubResource("Curve2D_24vxq")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+rotation = 1.5708
+script = ExtResource("1_pspu2")
 
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_enter"]
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
+position = Vector2(-0.499996, 0.249998)
+rotation = -1.5708
+scale = Vector2(0.386719, 0.367188)
+texture = ExtResource("1_fohro")
+
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D/Sprite2D"]
+position = Vector2(0, 0.000166178)
+scale = Vector2(1, 1)
+script = ExtResource("2_wfty8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Sprite2D/Area2D"]
+position = Vector2(0, -0.00012207)
+shape = SubResource("RectangleShape2D_qbds3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="body_entered" from="Path2D/PathFollow2D/Sprite2D/Area2D" to="Path2D/PathFollow2D/Sprite2D/Area2D" method="_on_body_enter"]

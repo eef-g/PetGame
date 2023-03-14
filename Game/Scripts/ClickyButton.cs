@@ -10,8 +10,11 @@ public partial class ClickyButton : Button
 	private Node2D _targetScene = null; 
 	// Called when the node enters the scene tree for the first time.
 	Node2D root_node;
+
+	Random rand;
 	public override void _Ready()
 	{
+		rand = new Random(OS.GetProcessId());
 		this.Text = _txt;
 	}
 
@@ -24,9 +27,14 @@ public partial class ClickyButton : Button
 	private void FarmButtonPressed()
 	{
 		GD.Print("The farm button was pressed.");
+		SpawnFood();
+	}
+
+	private void SpawnFood()
+	{
 		var scene = GD.Load<PackedScene>("res://Scenes/food.tscn");
 		var inst = scene.Instantiate<Node2D>();
-		inst.Position = new Vector2(872, 380);
+		inst.Position = new Vector2(rand.Next(50, 1000), 0);
 		GetParent().AddChild(inst);
 	}
 }
